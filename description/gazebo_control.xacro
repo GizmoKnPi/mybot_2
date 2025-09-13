@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- FRONT WHEEL PAIR DRIVE -->
+  <gazebo>
+    <plugin name="front_drive" filename="libgazebo_ros_diff_drive.so">
+      <left_joint>left_front_wheel_joint</left_joint>
+      <right_joint>right_front_wheel_joint</right_joint>
+
+      <wheel_separation>0.40</wheel_separation>      <!-- distance between left and right -->
+      <wheel_diameter>0.10</wheel_diameter>
+
+      <max_wheel_torque>5.0</max_wheel_torque>
+      <max_wheel_acceleration>5.0</max_wheel_acceleration>
+
+      <command_topic>cmd_vel</command_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+    </plugin>
+  </gazebo>
+
+  <!-- REAR WHEEL PAIR DRIVE -->
+  <gazebo>
+    <plugin name="rear_drive" filename="libgazebo_ros_diff_drive.so">
+      <left_joint>left_rear_wheel_joint</left_joint>
+      <right_joint>right_rear_wheel_joint</right_joint>
+
+      <wheel_separation>0.40</wheel_separation>
+      <wheel_diameter>0.10</wheel_diameter>
+
+      <max_wheel_torque>5.0</max_wheel_torque>
+      <max_wheel_acceleration>5.0</max_wheel_acceleration>
+
+      <command_topic>cmd_vel</command_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+
+      <publish_odom>false</publish_odom>  <!-- only front publishes odom -->
+      <publish_odom_tf>false</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+
+    </plugin>
+  </gazebo>
+
+
+</robot>
