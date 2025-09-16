@@ -42,7 +42,7 @@
 
     <gazebo>
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-            <parameters>$(find mybot_2)/config/my_controllers.yaml</parameters>
+            <parameters>$(find mybot_2wd)/config/my_controllers.yaml</parameters>
         </plugin>
     </gazebo>
 
