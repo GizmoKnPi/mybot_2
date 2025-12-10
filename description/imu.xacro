@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Fixed joint to attach IMU to chassis -->
+    <joint name="imu_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="imu_link"/>
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Material -->
+    <material name="imu_blue"><color rgba="0 0 1 1"/></material>
+
+
+    <!-- IMU link -->
+    <link name="imu_link">
+        <visual>
+            <geometry>
+                <box size="0.03 0.03 0.01"/>
+            </geometry>
+            <material name="imu_blue"/>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.03 0.03 0.01"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.05" x="0.03" y="0.03" z="0.01">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <!-- Gazebo plugin for IMU -->
+    <gazebo reference="imu_link">
+        <material>Gazebo/Blue</material>
+
+        <sensor name="imu_sensor" type="imu">
+            <pose>0 0 0 0 0 0</pose>
+            <always_on>true</always_on>
+            <update_rate>50</update_rate>
+            <visualize>false</visualize>
+
+            <plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+                <ros>
+                    <argument>~/out:=imu/data</argument>
+                </ros>
+                <output_type>sensor_msgs/Imu</output_type>
+                <frame_name>imu_link</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+</robot>

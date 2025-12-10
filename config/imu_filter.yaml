@@ -1,0 +1,7 @@
+imu_filter_madgwick_node:
+  ros__parameters:
+    frequency: 200.0
+    beta: 0.4        # was 0.1 — try 0.3..0.6 and observe
+    use_mag: false
+    use_dt_from_msg_header: false
+               # adjust if response is sluggish or noisy
