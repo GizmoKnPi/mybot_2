@@ -1,0 +1,68 @@
+ekf_filter_node:
+  ros__parameters:
+    frequency: 50.0  # Increased from 30Hz
+    
+    # Input topics
+    odom0: /odom                    # Wheel encoder odometry
+    imu0: /imu/data_filtered        # Filtered IMU from Madgwick
+    
+    # --- WHEEL ODOMETRY CONFIG ---
+    # Use ONLY position (x,y) and linear velocity from wheels
+    # DO NOT use yaw from wheels (prone to slip)
+    odom0_config: [true,  true,  false,   # x, y position (NO z)
+                   false, false, false,   # NO orientation from wheels
+                   true,  true,  false,   # vx, vy linear velocity (NO vz)
+                   false, false, false,   # NO angular velocity from wheels
+                   false, false, false]   # NO acceleration
+    
+    # --- IMU CONFIG ---
+    # Use orientation (yaw) and angular velocity from IMU
+    # IMU provides reliable orientation (no wheel slip)
+    imu0_config: [false, false, false,   # NO position from IMU
+                  false, false, false,   # NO angular velocity (we'll use raw for this)
+                  false, false, false,   # NO linear acceleration
+                  false, false, true,    # Use ONLY yaw from Madgwick orientation
+                  false, false, false]   # NO magnetometer
+    
+    # Frame configuration
+    world_frame: odom
+    odom_frame: odom
+    base_link_frame: base_link
+    imu0_frame: imu_link
+    
+    # Remove gravitational acceleration
+    imu0_remove_gravitational_acceleration: true
+    
+    # Covariances (tune these for your robot)
+    odom0_differential: false
+    imu0_differential: false
+    
+    # Process noise (higher = trust sensors less)
+    # Tune: Start with defaults, increase if output is jumpy
+    process_noise_covariance: [0.05, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.05, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.06, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.03, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.03, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.06, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.025, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.025, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.04, 0.0,    0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.01, 0.0,    0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.01, 0.0,    0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.02, 0.0,    0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.01, 0.0,    0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.01, 0.0,
+                               0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.0,     0.0,     0.0,    0.0,    0.0,    0.0,    0.0,    0.0,    0.015]
+    
+    # Sensor covariances (tune based on your sensor quality)
+    # Higher values = less trust in that sensor
+    odom0_pose_covariance_diagonal: [0.01, 0.01, 0.0, 0.0, 0.0, 0.0]
+    odom0_twist_covariance_diagonal: [0.01, 0.01, 0.0, 0.0, 0.0, 0.0]
+    
+    imu0_pose_covariance_diagonal: [0.0, 0.0, 0.0, 0.0, 0.0, 0.01]   # Trust yaw from IMU
+    imu0_twist_covariance_diagonal: [0.0, 0.0, 0.0, 0.001, 0.001, 0.001]  # Trust angular velocity
+    
+    # Debug
+    print_diagnostics: true
+    debug: false

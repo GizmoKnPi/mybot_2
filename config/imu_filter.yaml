@@ -1,7 +1,12 @@
 imu_filter_madgwick_node:
   ros__parameters:
     frequency: 200.0
-    beta: 0.4        # was 0.1 — try 0.3..0.6 and observe
+    beta: 0.04        # Start with 0.04, increase if response is slow
     use_mag: false
     use_dt_from_msg_header: false
-               # adjust if response is sluggish or noisy
+    # Orientation in ENU frame (standard for ROS)
+    world_frame: "enu"
+    fixed_frame: "odom"
+    # Disable TF publishing (EKF will handle it)
+    publish_tf: false
+    remove_gravity_forward_acc: true
