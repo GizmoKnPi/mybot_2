@@ -11,6 +11,7 @@ def generate_launch_description():
             package='v4l2_camera',
             executable='v4l2_camera_node',
             output='screen',
+            namespace='camera',
             parameters=[{
                 # Explicitly select Logitech C270
                 'video_device': '/dev/v4l/by-id/usb-046d_C270_HD_WEBCAM_44725A50-video-index0',

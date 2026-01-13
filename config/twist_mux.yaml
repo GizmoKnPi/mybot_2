@@ -4,7 +4,12 @@ twist_mux:
       navigation:
         topic   : cmd_vel             # Nav2 publishes here by default
         timeout : 0.5
-        priority: 10                  # Lower priority
+        priority: 10
+        
+      tracker:
+        topic   : cmd_vel_tracker
+        timeout : 0.5
+        priority: 20                    # Lower priority
 
       # Entry for your keyboard commands
       keyboard:
