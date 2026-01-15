@@ -69,9 +69,8 @@
       <pose>0 0 0 0 -0 0</pose>
       <self_collide>false</self_collide>
     </model>
-    
     <model name='cylinder'>
-      <pose>1.81414 2.90907 0.499999 -0 0 -0</pose>
+      <pose>1.81414 2.90907 0.499999 0 0 0</pose>
       <link name='cylinder_link'>
         <inertial>
           <inertia>
@@ -120,7 +119,7 @@
       <self_collide>false</self_collide>
     </model>
     <model name='sphere'>
-      <pose>3.08612 -0.065429 0.5 0 -0 0</pose>
+      <pose>1.69298 -0.065429 0.033 0 -0 0</pose>
       <link name='sphere_link'>
         <inertial>
           <inertia>
@@ -137,7 +136,7 @@
         <collision name='sphere_collision'>
           <geometry>
             <sphere>
-              <radius>0.033</radius>
+              <radius>0.033000000000000002</radius>
             </sphere>
           </geometry>
           <surface>
@@ -151,7 +150,7 @@
         <visual name='sphere_visual'>
           <geometry>
             <sphere>
-              <radius>0.033</radius>
+              <radius>0.033000000000000002</radius>
             </sphere>
           </geometry>
           <material>
