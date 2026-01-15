@@ -12,7 +12,7 @@ def generate_launch_description():
 
     my_package_name='mybot_2wd'
     sim_mode = LaunchConfiguration('sim_mode')
-    sim_mode_dec = DeclareLaunchArgument('sim_mode', default_value='false')
+    sim_mode_dec = DeclareLaunchArgument('sim_mode', default_value='true')
 
     tracker_params_sim = os.path.join(get_package_share_directory(my_package_name),'config','ball_tracker_params_sim.yaml')
     tracker_params_robot = os.path.join(get_package_share_directory(my_package_name),'config','ball_tracker_params_robot.yaml')
