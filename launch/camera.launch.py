@@ -20,7 +20,7 @@ def generate_launch_description():
                 'image_size': [640, 480],
 
                 # Frame ID for TF
-                'camera_frame_id': 'camera_link_optical',
+                'camera_info_frame_id': 'camera_link_optical',
 
                 # Optional but recommended
                 # 'frame_rate': 30.0
