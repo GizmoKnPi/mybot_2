@@ -7,6 +7,7 @@
     <!-- <xacro:include filename="gazebo_control.xacro" /> -->
     <xacro:include filename="camera.xacro" />
     <!-- <xacro:include filename="depth_camera.xacro" /> -->
-    <xacro:include filename="lidar.xacro" />
+    <!-- <xacro:include filename="lidar.xacro" /> -->
+    <xacro:include filename="lidar_3d.xacro"/>
     <xacro:include filename="imu.xacro"/>
 </robot>
