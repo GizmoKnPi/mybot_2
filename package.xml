@@ -3,11 +3,17 @@
 <package format="3">
   <name>mybot_2wd</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>ROS2 Wheel Loader with Autonomous Docking System using AprilTag</description>
   <maintainer email="my_email@email.com">Josh Newans</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclpy</depend>
+  <depend>geometry_msgs</depend>
+  <depend>apriltag_msgs</depend>
+  <depend>tf2_ros</depend>
+  <depend>sensor_msgs</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
