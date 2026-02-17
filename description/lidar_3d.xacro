@@ -8,7 +8,7 @@
   <joint name="servo_mount_joint" type="revolute">
     <parent link="chassis"/>   <!-- SAME STYLE AS 2D LIDAR -->
     <child link="lidar_tilt_link"/>
-    <origin xyz="-0.04 0 0.268" rpy="0 0 3.14159"/>  <!-- tweak height/offset -->
+    <origin xyz="0.08 0 0.288" rpy="0 0 3.14159"/>  <!-- tweak height/offset -->
     <axis xyz="0 1 0"/>
     <limit lower="-1.57" upper="1.57" effort="10.0" velocity="1.0"/>
   </joint>
