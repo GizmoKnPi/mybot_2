@@ -36,5 +36,10 @@ install(
   DIRECTORY config description launch worlds
   DESTINATION share/${PROJECT_NAME}
 )
+# Install Python nodes
+install(PROGRAMS
+  scripts/woodchip_tracker.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()

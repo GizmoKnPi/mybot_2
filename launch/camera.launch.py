@@ -14,7 +14,7 @@ def generate_launch_description():
             namespace='camera',
             parameters=[{
                 # Explicitly select Logitech C270
-                'video_device': '/dev/v4l/by-id/usb-046d_C270_HD_WEBCAM_44725A50-video-index0',
+                'video_device': '/dev/v4l/by-id/usb-046d_C270_HD_WEBCAM_73190B50-video-index0',
 
                 # Image properties
                 'image_size': [640, 480],
