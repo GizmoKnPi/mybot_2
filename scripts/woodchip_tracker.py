@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
+from std_msgs.msg import Bool, Float32
 from cv_bridge import CvBridge
 import cv2
 from ultralytics import YOLO
@@ -30,6 +31,21 @@ class WoodchipTracker(Node):
         self.model = YOLO("/home/gizmoros2/Downloads/segmentation_model (1)/best.pt")
         self.get_logger().info("✅ Woodchip Tracker Node Started.")
 
+        self.enabled = False
+        self.create_subscription(
+        Bool,
+        '/woodchip_tracker/enable',
+        self.enable_callback,
+        10
+        )
+
+        # Publish detected area
+        self.area_pub = self.create_publisher(Float32, '/woodchip_tracker/area', 10)
+
+    def enable_callback(self, msg):
+        self.enabled = msg.data
+        self.get_logger().info(f"Woodchip tracker enabled: {self.enabled}")
+
     def image_callback(self, msg):
         use_gpu = self.get_parameter('use_gpu').value
         k_p = self.get_parameter('angular_k').value
@@ -51,8 +67,13 @@ class WoodchipTracker(Node):
         # 🚀 NEW: Convert back to a ROS Image message and publish
         annotated_msg = self.bridge.cv2_to_imgmsg(annotated_frame, encoding="bgr8")
         self.annotated_pub.publish(annotated_msg)
+
         
         twist = Twist()
+        area = 0.0
+
+        if not self.enabled:
+            return
 
         # Process Detections for Steering
         if len(results[0].boxes) > 0:
@@ -78,6 +99,10 @@ class WoodchipTracker(Node):
             twist.angular.z = 0.0
 
         self.cmd_pub.publish(twist)
+
+        area_msg = Float32()
+        area_msg.data = float(area)
+        self.area_pub.publish(area_msg)
 
 def main(args=None):
     rclpy.init(args=args)
