@@ -20,7 +20,7 @@ class WoodchipTracker(Node):
 
         # Publishers and Subscribers
         self.subscription = self.create_subscription(Image, '/camera/image_raw', self.image_callback, 10)
-        self.cmd_pub = self.create_publisher(Twist, '/cmd_vel', 10)
+        self.cmd_pub = self.create_publisher(Twist, '/cmd_vel_tracker', 10)
         self.annotated_pub = self.create_publisher(Image, '/camera/annotated_image', 10)
         
         self.bridge = CvBridge()
