@@ -23,6 +23,8 @@ class WoodchipTracker(Node):
         self.cmd_pub = self.create_publisher(Twist, '/cmd_vel_tracker', 10)
         self.annotated_pub = self.create_publisher(Image, '/camera/annotated_image', 10)
         
+        self.arrived_pub = self.create_publisher(Bool, '/woodchip_tracker/arrived', 10)
+
         self.bridge = CvBridge()
 
         # Load Model
@@ -76,6 +78,9 @@ class WoodchipTracker(Node):
         
         twist = Twist()
         distance_to_bottom = 0.0 # Default value
+        is_arrived = False # 🚀 NEW: Default to not arrived
+
+        
 
         if not self.enabled:
             return
@@ -118,6 +123,7 @@ class WoodchipTracker(Node):
                         self.get_logger().info("Final Approach! Driving straight in.")
                     else:
                         twist.linear.x = 0.0 
+                        is_arrived = True
                         self.get_logger().info("Arrived at massive pile!")
 
             # 2. THE SCANNING STATES
@@ -150,7 +156,8 @@ class WoodchipTracker(Node):
                         twist.linear.x = float(speed)
                         self.get_logger().info("Approaching framed pile...")
                     else:
-                        twist.linear.x = 0.0 
+                        twist.linear.x = 0.0
+                        is_arrived = True 
                         self.get_logger().info("Arrived at pile center!")
             
             # 🚀 SAVE THE COMMAND: Store this in memory just in case we go blind next frame
@@ -174,6 +181,11 @@ class WoodchipTracker(Node):
         dist_msg = Float32()
         dist_msg.data = distance_to_bottom
         self.distance_pub.publish(dist_msg)
+
+        # Publish the arrived status
+        arrived_msg = Bool()
+        arrived_msg.data = is_arrived
+        self.arrived_pub.publish(arrived_msg)
 
 def main(args=None):
     rclpy.init(args=args)
