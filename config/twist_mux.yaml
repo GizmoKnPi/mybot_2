@@ -1,0 +1,13 @@
+twist_mux:
+  ros__parameters:
+    topics:
+      navigation:
+        topic   : cmd_vel             # Nav2 publishes here by default
+        timeout : 0.5
+        priority: 10                  # Lower priority
+
+      # Entry for your keyboard commands
+      keyboard:
+        topic   : cmd_vel_keyboard    # We'll make the keyboard publish here
+        timeout : 0.5
+        priority: 100                 # Higher priority (overrides Nav2)
